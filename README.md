@@ -1,5 +1,46 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+still work in progress. lots of "left-over" code, but basic functionality is ok.
+
+## setup
+
+u ll need an aws cognito user Pool
+during user pool creation, also create a cognito client (without app secret)
+
+enter the relevant data from the userpool into the .env.local file
+
+make sure that the cognito attributes match your code in asyncSignUp and asyncSignIn
+
+
+## react router
+
+edit your routes for react-router inside the /auth/router file
+and make often used routes available within /auth/routeNames (to avoid typos and allow for app-wide changes)
+
+be careful with react-router's "exact" routes. and the ones without. especially if your component has its own router, such as "privateHome"
+
+components/privateHome has its own router for its sub-pages
+
+this enables temporary routes for dialogs within this component, where u can programmatically push the user to routes, and render the routes. but manually entered URLs would not "catch"..
+
+this also allows for more simpler routing, as not all sub routes are relevant to all parts of the app.
+
+## higher order component (hoc)
+
+an "withAuth" hoc is in charge of checking authentication and allowing access, export your component withHoc and it will require the user to be logged in.
+
+access/id tokens can be re-newed before they expire. currently set at 10secs before expiration.
+they can also manually be re-newed.
+
+## .env. files
+
+restart app after editing .env or .env.local file, to see changes having an effect!
+
+its recommended that u save cognito access data into .env.local, rather than the .env file (so they don t get accidentally pushed to github)
+when creating a cognito client, make sure u set the settings to NOT use an app secret (they don t work for web apps)
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:
